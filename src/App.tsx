@@ -1,6 +1,7 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Stage } from '@react-three/drei'
 import { useState } from 'react';
+import { randFloat } from 'three/src/math/MathUtils';
 
 function App() {
   const [shouldRotate, setShouldRotate] = useState<boolean>(false);
@@ -24,7 +25,7 @@ function App() {
       <div id="canvas-container">
         <Canvas>
           <OrbitControls autoRotate={shouldRotate} autoRotateSpeed={20} />
-          <Stage intensity={0.1}>
+          <Stage intensity={0.1} >
             <group position={[0, -3, 0]}>
               <group position={[-4, 0, -4]}>
                 <Present color1={myColors[0]} color2={myColors[1]} size={1} />
@@ -32,8 +33,14 @@ function App() {
               <group position={[4, 0, 4]}>
                 <Present color1={myColors[2]} color2={myColors[3]} size={0.5} />
               </group>
-            </group>
             <Tree />
+            <group>
+            {snowFlakes.map(snowflake => {
+              return <SnowFlake key={snowflake.id} position={snowflake.location}/>
+            })}
+            </group>
+            </group>
+            
           </Stage>
           {/* <mesh position-y={-10}>
             <boxGeometry args={[1000, 0.01, 1000]} />
@@ -49,6 +56,43 @@ function App() {
 }
 
 export default App
+
+interface SnowFlakeProps {
+  position: [number, number, number]
+}
+
+function SnowFlake(props: SnowFlakeProps): JSX.Element {
+  return (
+    <mesh position={props.position}>
+      <boxGeometry args={[0.2 , 0.2, 0.2]}/>
+      <meshStandardMaterial color="white"/>
+    </mesh>
+  )
+}
+const snowFlakes = CreateSnowFlake()
+console.log(snowFlakes)
+
+interface SnowFlake {
+  location: [number, number, number],
+  id: number
+}
+function CreateSnowFlake() {
+  const varstemp:SnowFlake[] = []
+  for(let i=0; i < 1000; i++) {
+    varstemp.push({id: i, location: randomPosition()})
+  }
+
+  function randomPosition(): [number, number, number] {
+    return [
+      randFloat(-25, 25),
+      randFloat(-3, 25),
+      randFloat(-25, 25)
+    ]
+  }
+  return (
+    varstemp
+  )
+}
 
 interface PresentProps {
   color1: string,
