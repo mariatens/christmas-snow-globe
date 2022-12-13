@@ -40,6 +40,7 @@ function App() {
               </Text3D>
             
           </Float>
+          <OrbitControls autoRotateSpeed={20} />
           <Stage intensity={0.1} >
             <group position={[0, -3, 0]}>
               <group position={[-4, 0, -4]}>
