@@ -5,7 +5,6 @@ import { randFloat } from 'three/src/math/MathUtils';
 import { Triangle } from 'three';
 
 function App() {
-  const [shouldRotate, setShouldRotate] = useState<boolean>(false);
 
   const myColors = [
     "#cc0c39",
@@ -14,16 +13,10 @@ function App() {
     "#f8fcc1",
     "#1693a7"
   ]
-  const handleToggleRotate = () => {
-    setShouldRotate((prev) => !prev);
-  }
+
 
   return (
     <>
-
-      <div className="treeApp">
-        <button onClick={handleToggleRotate}>Rotate</button>
-      </div>
       <div id="canvas-container">
         <Canvas>
           {/* https://www.dafont.com/home-christmas.font */}
@@ -47,7 +40,6 @@ function App() {
               </Text3D>
             
           </Float>
-          <OrbitControls autoRotate={shouldRotate} autoRotateSpeed={20} />
           <Stage intensity={0.1} >
             <group position={[0, -3, 0]}>
               <group position={[-4, 0, -4]}>
