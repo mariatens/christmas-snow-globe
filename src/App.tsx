@@ -2,6 +2,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, OrbitControls, Stage } from '@react-three/drei'
 import { useState } from 'react';
 import { randFloat } from 'three/src/math/MathUtils';
+import { Triangle } from 'three';
 
 function App() {
   const [shouldRotate, setShouldRotate] = useState<boolean>(false);
@@ -34,7 +35,7 @@ function App() {
                 <Present color1={myColors[2]} color2={myColors[3]} size={0.5} />
               </group>
               <Tree />
-
+              <SnowMan/>
               <group>
                 {snowFlakes.map(snowflake => {
                   return <SnowFlake key={snowflake.id} position={snowflake.location} />
@@ -79,6 +80,50 @@ function SnowFlake(props: SnowFlakeProps): JSX.Element {
 
   )
 }
+
+function SnowMan(): JSX.Element{
+  return(
+    <>
+    <mesh position = {[14, -0.6, 0]}> 
+      <sphereGeometry args = {[5,8,10]}/>
+      <meshStandardMaterial />
+      </mesh>
+      <mesh position = {[14, 6, 0]}>
+      <sphereGeometry args = {[3,10,10]}/>
+      <meshStandardMaterial />
+      </mesh>
+      {/* eyes of the snowman */}
+      <mesh position = {[12, 7.5, 5.5]}>
+        <circleGeometry args = {[0.3,8]}/>
+        <meshStandardMaterial color={"blue"} />
+      </mesh>
+      <mesh position = {[16, 7.5, 5.5]}>
+        <circleGeometry args = {[0.3,8]}/>
+        <meshStandardMaterial color={"blue"} />
+      </mesh>
+
+      {/* nose of the snowman */}
+      <mesh position = {[14, 6.5, 5.5]}>
+        <circleGeometry args = {[0.7,3]}/>
+        <meshStandardMaterial color={"orange"} />
+      </mesh>
+      {/*  buttons of the snowman */}
+      <mesh position = {[14, 2.5, 5.5]}>
+        <circleGeometry args = {[0.3,8]}/>
+        <meshStandardMaterial color={"black"} />
+      </mesh>
+      <mesh position = {[14, 1, 5.5]}>
+        <circleGeometry args = {[0.3,8]}/>
+        <meshStandardMaterial color={"black"} />
+      </mesh>
+      <mesh position = {[14, -0.5, 5.5]}>
+        <circleGeometry args = {[0.3,8]}/>
+        <meshStandardMaterial color={"black"} />
+      </mesh>
+      </>
+  )
+}
+// 
 const snowFlakes = CreateSnowFlake()
 console.log(snowFlakes)
 
