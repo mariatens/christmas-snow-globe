@@ -125,9 +125,11 @@ function SnowMan(): JSX.Element {
       </mesh>
 
       {/* nose of the snowman */}
-      <mesh position={[14, 6.5, 5.5]}>
+      <mesh rotation-x = {Math.PI/2}position={[14, 6.5, 5.5]}> 
+
         {/* <circleGeometry args={[0.7, 3]} /> //TODO: change to cone */}
-        <coneGeometry args={[]} />
+        <cylinderGeometry args={[0.06,0.44, 1.6,8]} />
+        {/* //rotate in mesh */}
         <meshStandardMaterial color={"orange"} />
       </mesh>
       {/*  buttons of the snowman */}
