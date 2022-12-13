@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, OrbitControls, Stage } from '@react-three/drei'
+import { Center, Float, OrbitControls, Stage, Text3D } from '@react-three/drei'
 import { useState } from 'react';
 import { randFloat } from 'three/src/math/MathUtils';
 import { Triangle } from 'three';
@@ -20,11 +20,21 @@ function App() {
 
   return (
     <>
+
       <div className="treeApp">
         <button onClick={handleToggleRotate}>Rotate</button>
       </div>
       <div id="canvas-container">
         <Canvas>
+          {/* https://www.dafont.com/home-christmas.font */}
+          {/* https://github.com/pmndrs/drei#text3d */}
+          {/* http://gero3.github.io/facetype.js/ */}
+          <Center>
+          <Text3D size={2} font={"/christmas-font.json"}> 
+            MERRY CHRISTMAS
+            <meshStandardMaterial color ={"red"}/>
+          </Text3D>
+          </Center>
           <OrbitControls autoRotate={shouldRotate} autoRotateSpeed={20} />
           <Stage intensity={0.1} >
             <group position={[0, -3, 0]}>
@@ -35,7 +45,7 @@ function App() {
                 <Present color1={myColors[2]} color2={myColors[3]} size={0.5} />
               </group>
               <Tree />
-              <SnowMan/>
+              <SnowMan />
               <group>
                 {snowFlakes.map(snowflake => {
                   return <SnowFlake key={snowflake.id} position={snowflake.location} />
@@ -81,46 +91,46 @@ function SnowFlake(props: SnowFlakeProps): JSX.Element {
   )
 }
 
-function SnowMan(): JSX.Element{
-  return(
+function SnowMan(): JSX.Element {
+  return (
     <>
-    <mesh position = {[14, -0.6, 0]}> 
-      <sphereGeometry args = {[5,8,10]}/>
-      <meshStandardMaterial />
+      <mesh position={[14, -0.6, 0]}>
+        <sphereGeometry args={[5, 8, 10]} />
+        <meshStandardMaterial />
       </mesh>
-      <mesh position = {[14, 6, 0]}>
-      <sphereGeometry args = {[3,10,10]}/>
-      <meshStandardMaterial />
+      <mesh position={[14, 6, 0]}>
+        <sphereGeometry args={[3, 10, 10]} />
+        <meshStandardMaterial />
       </mesh>
       {/* eyes of the snowman */}
-      <mesh position = {[12, 7.5, 5.5]}>
-        <circleGeometry args = {[0.3,8]}/>
-        <meshStandardMaterial color={"blue"} />
+      <mesh position={[12, 7.5, 5.5]}>
+        <circleGeometry args={[0.3, 8]} />
+        <meshStandardMaterial flatShading = {true}color={"blue"} />
       </mesh>
-      <mesh position = {[16, 7.5, 5.5]}>
-        <circleGeometry args = {[0.3,8]}/>
-        <meshStandardMaterial color={"blue"} />
+      <mesh position={[16, 7.5, 5.5]}>
+        <circleGeometry args={[0.3, 8]} />
+        <meshStandardMaterial flatShading = {true}color={"blue"} />
       </mesh>
 
       {/* nose of the snowman */}
-      <mesh position = {[14, 6.5, 5.5]}>
-        <circleGeometry args = {[0.7,3]}/>
+      <mesh position={[14, 6.5, 5.5]}>
+        <circleGeometry args={[0.7, 3]} /> //TODO: change to cone 
         <meshStandardMaterial color={"orange"} />
       </mesh>
       {/*  buttons of the snowman */}
-      <mesh position = {[14, 2.5, 5.5]}>
-        <circleGeometry args = {[0.3,8]}/>
+      <mesh position={[14, 2.5, 5.5]}>
+        <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial color={"black"} />
       </mesh>
-      <mesh position = {[14, 1, 5.5]}>
-        <circleGeometry args = {[0.3,8]}/>
+      <mesh position={[14, 1, 5.5]}>
+        <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial color={"black"} />
       </mesh>
-      <mesh position = {[14, -0.5, 5.5]}>
-        <circleGeometry args = {[0.3,8]}/>
+      <mesh position={[14, -0.5, 5.5]}>
+        <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial color={"black"} />
       </mesh>
-      </>
+    </>
   )
 }
 // 
@@ -166,6 +176,8 @@ function Present(props: PresentProps) {
         <boxGeometry args={[5, 5, 4]} />
         <meshStandardMaterial color={props.color2} />
       </mesh>
+      {/* ribbon of the presents */}
+
     </group>
   )
 }
@@ -175,15 +187,15 @@ function Tree() {
     <group>
       <mesh position-y={10}>
         <coneGeometry args={[3, 7, 8]} />
-        <meshStandardMaterial color={"green"} />
+        <meshStandardMaterial flatShading = {true} color={"green"} />
       </mesh>
       <mesh position-y={5}>
         <coneGeometry args={[5, 10, 8]} />
-        <meshStandardMaterial color={"green"} />
+        <meshStandardMaterial flatShading = {true} color={"green"} />
       </mesh>
       <mesh position-y={0}>
         <cylinderGeometry args={[1, 1, 10, 8]} />
-        <meshStandardMaterial color={"brown"} />
+        <meshStandardMaterial flatShading = {true} color={"brown"} />
       </mesh>
     </group>
   )
