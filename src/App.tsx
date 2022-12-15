@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Center, Float, OrbitControls, Stage, Text3D } from '@react-three/drei'
+import { Center, Float, OrbitControls, Stage, Text3D, useDetectGPU } from '@react-three/drei'
 import { useState } from 'react';
 import { randFloat } from 'three/src/math/MathUtils';
 import { Triangle } from 'three';
@@ -14,6 +14,7 @@ function App() {
     "#1693a7"
   ]
 
+  const GPUTier = useDetectGPU()
 
   return (
     <>
@@ -26,7 +27,7 @@ function App() {
             speed={1} // Animation speed, defaults to 1
             rotationIntensity={1} // XYZ rotation intensity, defaults to 1
             floatIntensity={1} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
-            floatingRange={[1, 10]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
+            floatingRange={[6, 10]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
           >
             <Center>
               <Text3D size={2} font={"/christmas-font.json"}>
@@ -184,8 +185,15 @@ function Present(props: PresentProps) {
         <boxGeometry args={[5, 5, 4]} />
         <meshStandardMaterial color={props.color2} />
       </mesh>
-      {/* ribbon of the presents */}
-
+      {/* ribbon of the present */}
+      <mesh position = {[0, -0.4, 0]}>
+      <boxGeometry args= {[1, 6, 4]}/>
+      <meshStandardMaterial color="red" />
+      </mesh>
+      <mesh position = {[0, -0.4, 0]} rotation-y= {[Math.PI/2]}>
+      <boxGeometry args= {[1, 6, 6]} />
+      <meshStandardMaterial color="red" />
+      </mesh>
     </group>
   )
 }
@@ -193,6 +201,10 @@ function Present(props: PresentProps) {
 function Tree() {
   return (
     <group>
+      <mesh position-y={11}>
+        {/* have the star of the tree */}
+        <meshStandardMaterial flatShading={true} color={"yellow"} />
+      </mesh>
       <mesh position-y={10}>
         <coneGeometry args={[3, 7, 8]} />
         <meshStandardMaterial flatShading={true} color={"green"} />
@@ -205,6 +217,12 @@ function Tree() {
         <cylinderGeometry args={[1, 1, 10, 8]} />
         <meshStandardMaterial flatShading={true} color={"brown"} />
       </mesh>
+      {/* do the decorations of the tree -> map for the position and color but use same args*/}
+      <mesh position={[0, 5, 3]}>
+      <sphereGeometry args={[0.5,32,16]} />
+      <meshStandardMaterial flatShading={true} color={"red"} />
+      </mesh>
+
     </group>
   )
 }
