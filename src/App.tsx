@@ -1,20 +1,21 @@
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Center, Float, OrbitControls, Stage, Text3D, useDetectGPU } from '@react-three/drei'
-import { useState } from 'react';
-import { randFloat } from 'three/src/math/MathUtils';
-import { Triangle } from 'three';
+import { Canvas, useFrame } from "@react-three/fiber";
+import {
+  Center,
+  Float,
+  OrbitControls,
+  Stage,
+  Text3D,
+  useDetectGPU,
+} from "@react-three/drei";
+import { useState } from "react";
+import { randFloat } from "three/src/math/MathUtils";
+import { Light, Triangle } from "three";
 
+const myColors = ["#cc0c39", "#e6781e", "#c8cf02", "#f8fcc1", "#1693a7"];
 function App() {
+  
 
-  const myColors = [
-    "#cc0c39",
-    "#e6781e",
-    "#c8cf02",
-    "#f8fcc1",
-    "#1693a7"
-  ]
-
-  const GPUTier = useDetectGPU()
+  const GPUTier = useDetectGPU();
 
   return (
     <>
@@ -31,18 +32,17 @@ function App() {
           >
             <Center>
               <Text3D size={2} font={"/christmas-font.json"}>
-                MERRY 
+                MERRY
                 <meshStandardMaterial color={"red"} />
               </Text3D>
-              </Center>
-              <Text3D position={[6,0,0]}size={2} font={"/christmas-font.json"}>
-                CHRISTMAS
-                <meshStandardMaterial color={"green"} />
-              </Text3D>
-            
+            </Center>
+            <Text3D position={[6, 0, 0]} size={2} font={"/christmas-font.json"}>
+              CHRISTMAS
+              <meshStandardMaterial color={"green"} />
+            </Text3D>
           </Float>
           <OrbitControls autoRotateSpeed={20} />
-          <Stage intensity={0.1} >
+          <Stage intensity={0.1}>
             <group position={[0, -3, 0]}>
               <group position={[-4, 0, -4]}>
                 <Present color1={myColors[0]} color2={myColors[1]} size={1} />
@@ -53,12 +53,16 @@ function App() {
               <Tree />
               <SnowMan />
               <group>
-                {snowFlakes.map(snowflake => {
-                  return <SnowFlake key={snowflake.id} position={snowflake.location} />
+                {snowFlakes.map((snowflake) => {
+                  return (
+                    <SnowFlake
+                      key={snowflake.id}
+                      position={snowflake.location}
+                    />
+                  );
                 })}
               </group>
             </group>
-
           </Stage>
           {/* <mesh position-y={-10}>
             <boxGeometry args={[1000, 0.01, 1000]} />
@@ -70,13 +74,13 @@ function App() {
         </Canvas>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
 
 interface SnowFlakeProps {
-  position: [number, number, number]
+  position: [number, number, number];
 }
 
 function SnowFlake(props: SnowFlakeProps): JSX.Element {
@@ -91,10 +95,8 @@ function SnowFlake(props: SnowFlakeProps): JSX.Element {
         <boxGeometry args={[0.2, 0.2, 0.2]} />
         <meshStandardMaterial color="white" />
       </mesh>
-
     </Float>
-
-  )
+  );
 }
 
 function SnowMan(): JSX.Element {
@@ -119,10 +121,9 @@ function SnowMan(): JSX.Element {
       </mesh>
 
       {/* nose of the snowman */}
-      <mesh rotation-x = {Math.PI/2}position={[14, 6.5, 5.5]}> 
-
+      <mesh rotation-x={Math.PI / 2} position={[14, 6.5, 5.5]}>
         {/* <circleGeometry args={[0.7, 3]} /> //TODO: change to cone */}
-        <cylinderGeometry args={[0.06,0.44, 1.6,8]} />
+        <cylinderGeometry args={[0.06, 0.44, 1.6, 8]} />
         {/* //rotate in mesh */}
         <meshStandardMaterial color={"orange"} />
       </mesh>
@@ -140,41 +141,34 @@ function SnowMan(): JSX.Element {
         <meshStandardMaterial color={"black"} />
       </mesh>
     </>
-  )
+  );
 }
-// 
-const snowFlakes = CreateSnowFlake()
-console.log(snowFlakes)
+//
+const snowFlakes = CreateSnowFlake();
+console.log(snowFlakes);
 
 interface SnowFlake {
-  location: [number, number, number],
-  id: number
+  location: [number, number, number];
+  id: number;
 }
 function CreateSnowFlake() {
-  const varstemp: SnowFlake[] = []
+  const varstemp: SnowFlake[] = [];
   for (let i = 0; i < 1000; i++) {
-    varstemp.push({ id: i, location: randomPosition() })
+    varstemp.push({ id: i, location: randomPosition() });
   }
 
   function randomPosition(): [number, number, number] {
-    return [
-      randFloat(-25, 25),
-      randFloat(-3, 25),
-      randFloat(-25, 25)
-    ]
+    return [randFloat(-25, 25), randFloat(-3, 25), randFloat(-25, 25)];
   }
-  return (
-    varstemp
-  )
+  return varstemp;
 }
 
 interface PresentProps {
-  color1: string,
-  color2: string,
-  size: number
+  color1: string;
+  color2: string;
+  size: number;
 }
 function Present(props: PresentProps) {
-
   return (
     <group scale={props.size}>
       <mesh position={[0, 2, 0]}>
@@ -186,23 +180,67 @@ function Present(props: PresentProps) {
         <meshStandardMaterial color={props.color2} />
       </mesh>
       {/* ribbon of the present */}
-      <mesh position = {[0, -0.4, 0]}>
-      <boxGeometry args= {[1, 6, 4]}/>
-      <meshStandardMaterial color="red" />
+      <mesh position={[0, -0.4, 0]}>
+        <boxGeometry args={[1, 6, 4]} />
+        <meshStandardMaterial color="red" />
       </mesh>
-      <mesh position = {[0, -0.4, 0]} rotation-y= {[Math.PI/2]}>
-      <boxGeometry args= {[1, 6, 6]} />
-      <meshStandardMaterial color="red" />
+      <mesh position={[0, -0.4, 0]} rotation-y={[Math.PI / 2]}>
+        <boxGeometry args={[1, 6, 6]} />
+        <meshStandardMaterial color="red" />
       </mesh>
     </group>
-  )
+  );
 }
+function degreesToRadians(degrees: number): number {
+  return degrees * (Math.PI / 180);
+}
+
+interface LightsProps {
+  position: number;
+  radius: number;
+  size: number;
+  colour: string;
+}
+
+function Lights(props: LightsProps): JSX.Element {
+  const degreesArr = [];
+  for (let i = 0; i < 360; i += 30) {
+    degreesArr.push(i);
+  }
+  const anglesArr = degreesArr.map(degreesToRadians);
+  const allLights = anglesArr.map((angle) => {
+    let x = props.radius * Math.cos(angle);
+    let z = props.radius * Math.sin(angle);
+    return (
+      <mesh key={angle} position={[x, props.position, z]}>
+        <sphereGeometry args={[props.size, 32, 16]} />
+        <meshStandardMaterial flatShading={true} color={props.colour} />
+      </mesh>
+    );
+  });
+  return <group>{allLights}</group>;
+}
+
+
+
 
 function Tree() {
   return (
     <group>
-      <mesh position-y={11}>
-        {/* have the star of the tree */}
+      <mesh position-y={15}>
+        <coneGeometry args={[1, 2, 2]} />
+        <meshStandardMaterial flatShading={true} color={"yellow"} />
+      </mesh>
+      <mesh rotation-y = {degreesToRadians(90)} position-y={15}>
+        <coneGeometry args={[1, 2, 2]} />
+        <meshStandardMaterial flatShading={true} color={"yellow"} />
+      </mesh>
+      <mesh rotation-y = {degreesToRadians(45)} position-y={15}>
+        <coneGeometry args={[1, 2, 2]} />
+        <meshStandardMaterial flatShading={true} color={"yellow"} />
+      </mesh>
+      <mesh rotation-y = {degreesToRadians(135)} position-y={15}>
+        <coneGeometry args={[1, 2, 2]} />
         <meshStandardMaterial flatShading={true} color={"yellow"} />
       </mesh>
       <mesh position-y={10}>
@@ -219,10 +257,23 @@ function Tree() {
       </mesh>
       {/* do the decorations of the tree -> map for the position and color but use same args*/}
       <mesh position={[0, 5, 3]}>
-      <sphereGeometry args={[0.5,32,16]} />
-      <meshStandardMaterial flatShading={true} color={"red"} />
+        <sphereGeometry args={[0.5, 32, 16]} />
+        <meshStandardMaterial flatShading={true} color={"red"} />
       </mesh>
 
+      <Lights position={5} radius={3} size={0.5} colour = {colors[0]}/>
+      <Lights position={10} radius={1.5} size={0.2} colour = {colors[1]}/>
+      <Lights position={8} radius={2.5} size={0.2} colour = {colors[2]}/>
+      <Lights position={1} radius={5} size={0.6} colour = {colors[4]}/>
+      <Lights position={1} radius={5} size={0.6} colour = {colors[3]}/>
+
     </group>
-  )
+  );
 }
+const colors = [
+  "#aaff00",
+  "#ffaa00",
+  "#ff00aa",
+  "#aa00ff",
+  "#00aaff"
+]
