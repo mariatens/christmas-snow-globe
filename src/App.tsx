@@ -41,14 +41,14 @@ function App() {
               <meshStandardMaterial color={"green"} />
             </Text3D>
           </Float>
-          <OrbitControls autoRotateSpeed={20} />
+          {/* <OrbitControls autoRotateSpeed={1} /> */}
           <Stage intensity={0.1}>
             <group position={[0, -3, 0]}>
-              <group position={[-4, 0, -4]}>
-                <Present color1={myColors[0]} color2={myColors[1]} size={1} />
+              <group position={[-4, -2, 5]}>
+                <Present color1={"goldenrod"} color2={"goldenrod"} size={0.5} />
               </group>
-              <group position={[4, 0, 4]}>
-                <Present color1={myColors[2]} color2={myColors[3]} size={0.5} />
+              <group position={[4, -2, 4]}>
+                <Present color1={"lightgray"} color2={"lightgrey"} size={0.5} />
               </group>
               <Tree />
               <SnowMan />
@@ -100,43 +100,45 @@ function SnowFlake(props: SnowFlakeProps): JSX.Element {
 }
 
 function SnowMan(): JSX.Element {
+  let z = 3 * Math.sin(90);
+  let z2 = 5*Math.sin(90);
   return (
     <>
-      <mesh position={[14, -0.6, 0]}>
-        <sphereGeometry args={[5, 8, 10]} />
-        <meshStandardMaterial />
-      </mesh>
       <mesh position={[14, 6, 0]}>
         <sphereGeometry args={[3, 10, 10]} />
         <meshStandardMaterial />
       </mesh>
+      <mesh position={[14, -0.6, 0]}>
+        <sphereGeometry args={[5, 8, 10]} />
+        <meshStandardMaterial />
+      </mesh>
       {/* eyes of the snowman */}
-      <mesh position={[12, 7.5, 5.5]}>
+      <mesh position={[12, 7.5, z]}>
         <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial flatShading={true} color={"blue"} />
       </mesh>
-      <mesh position={[16, 7.5, 5.5]}>
+      <mesh position={[16, 7.5, z]}>
         <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial flatShading={true} color={"blue"} />
       </mesh>
 
       {/* nose of the snowman */}
-      <mesh rotation-x={Math.PI / 2} position={[14, 6.5, 5.5]}>
-        {/* <circleGeometry args={[0.7, 3]} /> //TODO: change to cone */}
+      <mesh rotation-x={Math.PI / 2} position={[14, 6.5, z]}>
+        {/* <circleGeometry args={[0.7, 3]} />  */}
         <cylinderGeometry args={[0.06, 0.44, 1.6, 8]} />
-        {/* //rotate in mesh */}
+        //rotate in mesh
         <meshStandardMaterial color={"orange"} />
       </mesh>
       {/*  buttons of the snowman */}
-      <mesh position={[14, 2.5, 5.5]}>
+      <mesh position={[14, 2.5, z2]}>
         <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial color={"black"} />
       </mesh>
-      <mesh position={[14, 1, 5.5]}>
+      <mesh position={[14, 1, z2+1]}>
         <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial color={"black"} />
       </mesh>
-      <mesh position={[14, -0.5, 5.5]}>
+      <mesh position={[14, -0.5, z2+1]}>
         <circleGeometry args={[0.3, 8]} />
         <meshStandardMaterial color={"black"} />
       </mesh>
@@ -181,11 +183,11 @@ function Present(props: PresentProps) {
       </mesh>
       {/* ribbon of the present */}
       <mesh position={[0, -0.4, 0]}>
-        <boxGeometry args={[1, 6, 4]} />
+        <boxGeometry args={[1, 6, 7]} />
         <meshStandardMaterial color="red" />
       </mesh>
       <mesh position={[0, -0.4, 0]} rotation-y={[Math.PI / 2]}>
-        <boxGeometry args={[1, 6, 6]} />
+        <boxGeometry args={[1, 6, 7]} />
         <meshStandardMaterial color="red" />
       </mesh>
     </group>
@@ -227,11 +229,12 @@ function Lights(props: LightsProps): JSX.Element {
 function Tree() {
   return (
     <group>
-      <mesh position-y={15}>
+      {/* star attempt */}
+      {/* <mesh position-y={15}>
         <coneGeometry args={[1, 2, 2]} />
         <meshStandardMaterial flatShading={true} color={"yellow"} />
-      </mesh>
-      <mesh rotation-y = {degreesToRadians(90)} position-y={15}>
+      </mesh> */}
+      {/* <mesh rotation-y = {degreesToRadians(90)} position-y={15}>
         <coneGeometry args={[1, 2, 2]} />
         <meshStandardMaterial flatShading={true} color={"yellow"} />
       </mesh>
@@ -242,7 +245,7 @@ function Tree() {
       <mesh rotation-y = {degreesToRadians(135)} position-y={15}>
         <coneGeometry args={[1, 2, 2]} />
         <meshStandardMaterial flatShading={true} color={"yellow"} />
-      </mesh>
+      </mesh> */}
       <mesh position-y={10}>
         <coneGeometry args={[3, 7, 8]} />
         <meshStandardMaterial flatShading={true} color={"green"} />
@@ -261,11 +264,11 @@ function Tree() {
         <meshStandardMaterial flatShading={true} color={"red"} />
       </mesh>
 
-      <Lights position={5} radius={3} size={0.5} colour = {colors[0]}/>
-      <Lights position={10} radius={1.5} size={0.2} colour = {colors[1]}/>
-      <Lights position={8} radius={2.5} size={0.2} colour = {colors[2]}/>
-      <Lights position={1} radius={5} size={0.6} colour = {colors[4]}/>
-      <Lights position={1} radius={5} size={0.6} colour = {colors[3]}/>
+      <Lights position={5} radius={3} size={0.5} colour = {"goldenrod"}/>
+      <Lights position={10} radius={1.5} size={0.2} colour = {"goldenrod"}/>
+      <Lights position={8} radius={2.5} size={0.2} colour = {"#C30F16"}/>
+      <Lights position={1} radius={5} size={0.6} colour = {"goldenrod"}/>
+      <Lights position={1} radius={5} size={0.6} colour = {"#C30F16"}/>
 
     </group>
   );
